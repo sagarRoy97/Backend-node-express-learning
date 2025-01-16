@@ -1,29 +1,24 @@
 # Backend-node-express-learning
 
-## Installing Express JS:
-Express JS can be installed with the following command:
-```
-npm install --save express
-```
+## Using Middleware:
+In Express JS, incoming requests funnel through multiple functions until they get resolved and a response is sent for the request. These functions are called middleware. In Express JS, instead of one big request-handler, we can hook multiple functions in one request to execute (like a plugin and execute functionality).
 
-Here we are installing it as a production dependency as we need it in the application after deployment (production) to run the application. This will be an integral part of the application which will handle the requests and responses, parse the data, etc.
+The middleware is written inside the `use` method of the `app` (express) object. We can only use middleware after we call the express function:
 
 ```javascript
-// node js core module imports
-const http = require('http');
-
 // third party module imports
 const express = require('express');
 const app = express();
 
-// my logics
-const server = http.createServer(app);
-server.listen(8080, () => {
-    console.log("server is running at port 8080");
+app.use((req, res, next) => {
+    console.log("This is my first middleware");
+    next(); // next is a function which will pass the request to the next middleware
+});
+
+app.use((req, res, next) => {
+    console.log("This is my second middleware");
+    next();
 });
 ```
 
-Here we are importing the Express JS third-party module, running it as a function, and saving whatever it returns in the `app` variable. If you see the Express JS package in the node module, this `express` is a function and possibly returns an object when it gets called. This `app` variable now has all the functionalities of handling requests, responses, and body parsing.
-
-Express JS handles requests and responses in a particular and elegant manner. When we spin the server with this `app` variable, we get this type of request-response handler. For this, we have to pass the `app` variable inside the `createServer` method and put this in an event (request) listener.
-
+In the middleware, we have three parameters: `req`, `res`, and `next`. The `next` method is used to pass the incoming request to the next middleware; otherwise, we can stop it and send a response instead of passing it to the next middleware.
