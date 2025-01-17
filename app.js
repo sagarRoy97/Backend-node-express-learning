@@ -6,7 +6,7 @@ const express = require('express');
 const app = express();
 
 /**
- * app.use() can be use for multipurpose, normally we use for misslewears, going through official documentation,
+ * app.use() can be use for multipurpose, normally we use for misslewears, going through official documentation, it can have routes and more than one call back functions, so
  * this middlewears can be used for: filtering different routes also. Now as we know that the incoming request
  * funnels through every middlewears put 'middlewear with root route' at last, because it gets executed in every route and
  * if we put it at first, it will get executed. check when you put next() method as it pass the request to next middlewear, cross check
