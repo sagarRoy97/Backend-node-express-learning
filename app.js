@@ -9,14 +9,14 @@ const app = express();
 
 app.use(bodyParser.urlencoded({extended: false}));
 
-
-app.use(adminRouter);
-app.use(shopRouter);
-
 /**
- * because incoming requests fumnnels through middlewears from top to bottom, we can handle requests with no routes/unmatched route/not specified route at the bottom because, if it has route
- * it would have been handled by any middlewear, if it doesn't have a route, it would be handled by the middleware at the bottom.
+ * There are two route in adminRouter, what if we want to add a prefix to all the routes in adminRouter, For this we can use extra router below
+ * with adminRouter as a parameter. can do the same with shopRouter
+ * Remember express autpmatically ommits it so that it does not cause problem  in ./routes/admin.js  and ./routes/shop.js file logic
  */
+
+app.use('/admin',adminRouter);
+app.use('/shop',shopRouter);
 
 app.use((req, res, next) => {
     res.status(404).send("<h1>Page not found</h1>");
