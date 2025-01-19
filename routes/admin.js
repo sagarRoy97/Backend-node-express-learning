@@ -2,19 +2,17 @@ const path = require('path');
 
 const express = require('express');
 
+const rootDir = require('../helpers/path');
+
 
 const router = express.Router();
 
 /**
- * we can only use res.sendFile() to send HTML files, and it only takes absolute path as an argument.
- * so we can not use relative path("./views/shop.html") as an argument.
- * and "/views/shop.html" is not an absolute path. it needs OS level absolute path
- * So here we use node core modules path to get the absolute path of the file.
- * (path.join(__dirname)) fives the folder path of the current file 
+ * we got the rootDirectory from the path.js file, so don't need to use __dirname and going top level directory.
  */
-
 router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html'));
+    res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+    // res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html'));
 })
 
 
